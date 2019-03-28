@@ -30,13 +30,13 @@ require 'openssl'
 require 'base64'
 
 module AESCrypt
-  def self.encrypt(message, password)
-    Base64.encode64(self.encrypt_data(message.to_s.strip, self.key_digest(password), nil, "AES-256-CBC"))
+  def self.encrypt(message, password, iv)
+    Base64.encode64(self.encrypt_data(message.to_s.strip, self.key_digest(password), iv, "AES-256-CBC"))
   end
 
-  def self.decrypt(message, password)
+  def self.decrypt(message, password, iv)
     base64_decoded = Base64.decode64(message.to_s.strip)
-    self.decrypt_data(base64_decoded, self.key_digest(password), nil, "AES-256-CBC")
+    self.decrypt_data(base64_decoded, self.key_digest(password), iv, "AES-256-CBC")
   end
 
   def self.key_digest(password)
